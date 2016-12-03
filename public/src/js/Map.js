@@ -1,5 +1,3 @@
-var fs = require('fs');
-
 function initMap() {
   var uluru = {lat: 47.582127, lng: -122.1495682};
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -11,7 +9,7 @@ function initMap() {
     map: map
   });;
   map.addListener("bounds_changed", function(e) {
-    alert(map.getBounds());
+    // alert(map.getBounds());
   });
 
   var overlay;
@@ -65,3 +63,17 @@ function LineSegment(Start) {
     }
   }
 }
+
+function getElevation(CoordinateObj, callback) {
+  $.ajax({
+    type: 'POST',
+    url: '/api/elevation/',
+    data: CoordinateObj,
+  }).done(function(data) {
+    callback(data)
+  });
+
+}
+getElevation(new Coordinate(47.583822, -122.1458737), function(data) {
+  console.log(data);
+});
