@@ -9,6 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node api.js",
+    "start-site": "lt -p 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
