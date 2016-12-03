@@ -15,7 +15,7 @@ app.post('/api/elevation', function (req, res){
   console.log(req.body);
   var lat = req.body.lat;
   var lng = req.body.lng;
-  var child = exec('java -cp ./public/src/java/ Coordinates ' + lat + " " + lng, {cwd: './'}, function(err, stdout, stderr) {
+  var child = exec('java -cp ./src/java/ Coordinates ' + lat + " " + lng, {cwd: './'}, function(err, stdout, stderr) {
     var result = JSON.parse(stdout);
     res.send(result.results[0].elevation + "");
   });

@@ -1,8 +1,8 @@
 {
-  "name": "wta-trailmap",
+  "name": "WTA-Trailmap",
   "version": "1.0.0",
   "description": "Trail map for WTA trails",
-  "main": "api.js",
+  "main": "index.js",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
@@ -10,7 +10,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "javac ./public/src/java/Coordinates.java && node api.js",
+    "start": "javac ./src/java/Coordinates.java && node index.js",
     "start-site": "lt -p 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
