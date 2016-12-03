@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+       #map {
+        width: 100%;
+       }
+    </style>
     <meta charset="UTF-8" />
     <title>BCHacks</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,11 +21,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   </head>
   <body>
-    <p>
-      Hello World
-    </p>
-  </body>
-
-
-
+    <div id="map"></div>
+    <script>
+    document.getElementById('map').style.height = window.innerHeight+"px";
+    </script>
+      <script>
+        function initMap() {
+          var uluru = {lat: 47.582127, lng: -122.1495682};
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: uluru
+          });
+          var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+          });
+        };
+      </script>
+  <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZvfnTZCqtieHQH1Vsmby3kT_sGZ5K1UI&callback=initMap">
+      </script>
+    </body>
 </html>
