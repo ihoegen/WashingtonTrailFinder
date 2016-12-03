@@ -1,0 +1,24 @@
+{
+  "name": "wta-trailmap",
+  "version": "1.0.0",
+  "description": "Trail map for WTA trails",
+  "main": "api.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "body-parser": "^1.15.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ihoegen/WTA-TrailMap.git"
+  },
+  "author": "Ian Arlo Hoegen <ianhoegen@gmail.com> (https://github.com/ihoegen)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ihoegen/WTA-TrailMap/issues"
+  },
+  "homepage": "https://github.com/ihoegen/WTA-TrailMap#readme"
+}
