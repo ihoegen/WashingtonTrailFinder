@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "javac ./src/java/Coordinates.java && node index.js",
+    "start": "javac ./src/java/Elevation.java && node index.js",
     "start-site": "lt -p 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

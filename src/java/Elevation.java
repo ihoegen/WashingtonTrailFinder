@@ -1,7 +1,7 @@
 import java.net.*;
 import java.io.*;
 
-public class Coordinates {
+public class Elevation {
 
   public static void main(String[] args) throws Exception {
     String lat = args[0];
