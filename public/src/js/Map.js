@@ -1,28 +1,26 @@
 var map;
 var poly;
 function closePolyLine() {
-  logElevation(poly.getPath());
-  console.log("Closing polyline....");
+  logElevation(traverseLine(poly.getPath()));
   poly = new google.maps.Polyline({
     strokeColor: '#000000',
     strokeOpacity: 1.0,
     strokeWeight: 3
   });
   // poly.addListener('click', closePolyLine);
-  poly.addListener('click', function () {
-    logElevation(this.getPath());
-  });
+  poly.addListener('click', closePolyLine);
   poly.setMap(map);
 }
 
 
 function logElevation(path) {
-  console.log('Original');
-  for (var i = 0; i < path.getLength(); i++) {
-    console.log(path.getAt(i).lat() + ", " + path.getAt(i).lng());
-    // getElevation(new Coordinate(path.getAt(i).lat(), path.getAt(i).lng()), function(data) {
-    //   console.log(data);
-    // });
+  for (var i = 0; i < path.length; i++) {
+    var array = []
+    getElevation(new Coordinate(path[i].lat, path[i].lng), function(data) {
+      array.push(data);
+      buildGraph(data)
+    });
+
   }
 }
 // Handles click events on a map, and adds a new point to the Polyline.
@@ -53,8 +51,7 @@ function initMap() {
   });
   poly.setMap(map);
   poly.addListener('click', function() {
-    logElevation(poly.getPath());
-    console.log(traverseLine(poly.getPath()));
+    logElevation(traverseLine(poly.getPath()));
   });
   // Add a listener for the click event
   map.addListener('click', addLatLng);
@@ -94,7 +91,7 @@ function getElevation(CoordinateObj, callback) {
     url: '/api/elevation/',
     data: CoordinateObj,
   }).done(function(data) {
-    callback(data)
+    callback(parseFloat(data))
   });
 
 }
