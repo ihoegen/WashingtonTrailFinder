@@ -1,13 +1,16 @@
+var myChart;
 function buildGraph(CoordArray) {
+  console.log('buildGraph');
   var ctx = document.getElementById("myChart");
   var labelArray = [];
+  console.log(CoordArray.length);
   for (var i = 0; i < CoordArray.length; i ++) {
-    labelArray.push(" ");
+    labelArray.push(i);
   }
-  var myChart = new Chart(ctx, {
+  myChart = new Chart(ctx, {
       type: 'line',
       data: {
-          labels:
+          labels: labelArray,
           datasets: [{
               label: 'Elevation',
               data: CoordArray,
@@ -28,7 +31,6 @@ function buildGraph(CoordArray) {
 
 function traverseLine(path) {
   var newPath = []
-  console.log(path);
   for (var i = 0; i < path.getLength(); i++) {
     var coord = new Coordinate(path.getAt(i).lat(), path.getAt(i).lng());
     newPath.push(coord);
@@ -43,5 +45,3 @@ function traverseLine(path) {
   }
   return newPath;
 }
-
-buildGraph()

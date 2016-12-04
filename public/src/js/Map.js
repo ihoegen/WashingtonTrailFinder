@@ -1,5 +1,6 @@
 var map;
 var poly;
+var datasetCount;
 function closePolyLine() {
   logElevation(traverseLine(poly.getPath()));
   poly = new google.maps.Polyline({
@@ -15,12 +16,13 @@ function closePolyLine() {
 
 function logElevation(path) {
   for (var i = 0; i < path.length; i++) {
-    var array = []
+    var array = [];
     getElevation(new Coordinate(path[i].lat, path[i].lng), function(data) {
       array.push(data);
-      buildGraph(data)
+      if(array.length == path.length) {
+        buildGraph(array);
+      }
     });
-
   }
 }
 // Handles click events on a map, and adds a new point to the Polyline.
@@ -57,7 +59,6 @@ function initMap() {
   map.addListener('click', addLatLng);
 
   var overlay;
-  drawRandomLines(map);
 }
 
 function Coordinate(lat, lng) {
