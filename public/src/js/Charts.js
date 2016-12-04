@@ -1,5 +1,29 @@
-function buildGraph(coordinateArray) {
-  
+function buildGraph(CoordArray) {
+  var ctx = document.getElementById("myChart");
+  var labelArray = [];
+  for (var i = 0; i < CoordArray.length; i ++) {
+    labelArray.push(" ");
+  }
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels:
+          datasets: [{
+              label: 'Elevation',
+              data: CoordArray,
+          }]
+      },
+      options: {
+          scales: {
+              height: 180,
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
 }
 
 function traverseLine(path) {
@@ -19,3 +43,5 @@ function traverseLine(path) {
   }
   return newPath;
 }
+
+buildGraph()

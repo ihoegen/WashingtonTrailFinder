@@ -2,7 +2,7 @@
 <html>
   <head>
     <style>
-       #map {
+       #map, #myChart {
         width: 100%;
        }
     </style>
@@ -13,9 +13,12 @@
   </head>
   <body>
     <div id="map"></div>
+    <canvas id="myChart" height="50"></canvas>
+    <script src="./resources/Chart.js"></script>
     <script>
     defaultDomain = 'http://bchacks.localtunnel.me/';
-    document.getElementById('map').style.height = window.innerHeight+"px";
+    document.getElementById('map').style.height = window.innerHeight*.60+"px";
+    document.getElementById('myChart').style.height = window.innerHeight*.40+"px";
     </script>
     <script src="src/js/Charts.js"></script>
     <script src="src/js/Map.js"></script>
