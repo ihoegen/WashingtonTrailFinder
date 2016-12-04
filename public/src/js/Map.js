@@ -17,10 +17,12 @@ function closePolyLine() {
 
 
 function logElevation(path) {
+  console.log('Original');
   for (var i = 0; i < path.getLength(); i++) {
-    getElevation(new Coordinate(path.getAt(i).lat(), path.getAt(i).lng()), function(data) {
-      console.log(data);
-    });
+    console.log(path.getAt(i).lat() + ", " + path.getAt(i).lng());
+    // getElevation(new Coordinate(path.getAt(i).lat(), path.getAt(i).lng()), function(data) {
+    //   console.log(data);
+    // });
   }
 }
 // Handles click events on a map, and adds a new point to the Polyline.
@@ -50,36 +52,16 @@ function initMap() {
     // alert(map.getBounds());
   });
   poly.setMap(map);
-  poly.addListener('click', closePolyLine);
+  poly.addListener('click', function() {
+    logElevation(poly.getPath());
+    console.log(traverseLine(poly.getPath()));
+  });
   // Add a listener for the click event
   map.addListener('click', addLatLng);
 
   var overlay;
   drawRandomLines(map);
 }
-
-// function drawRandomLines(map) {
-//   var data =  new Coordinate(47.582127, -122.1495682);
-//   var seg = new LineSegment(data);
-//   seg.Add(new Coordinate(12, 21));
-//   console.log(seg.SegmentArray);
-//   console.log(seg.Get(1));
-//
-//   var line = [
-//   {lat: Math.random()*45, lng: Math.random()*360 - 180},
-//   {lat: Math.random()*45, lng: Math.random()*360 - 180},
-//   {lat: Math.random()*45, lng: Math.random()*360 - 180},
-//   {lat: Math.random()*45, lng: Math.random()*360 - 180}
-// ];
-// var lineObj = new google.maps.Polyline({
-//   path: line,
-//   geodesic: true,
-//   strokeColor: '#FF0000',
-//   strokeOpacity: 1.0,
-//   strokeWeight: 2
-// });
-// lineObj.setMap(map);
-// }
 
 function Coordinate(lat, lng) {
   this.lat = lat;
