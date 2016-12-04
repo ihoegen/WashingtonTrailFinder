@@ -10,19 +10,18 @@
     <title>BCHacks</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="./resources/Chart.js"></script>
   </head>
   <body>
     <div id="map"></div>
-    <canvas id="myChart" height="50"></canvas>
     <p id="loading"></p>
-    <script src="./resources/Chart.js"></script>
+    <canvas id="myChart" height="50"></canvas>
     <script>
-    defaultDomain = 'http://bchacks.localtunnel.me/';
-    document.getElementById('map').style.height = window.innerHeight*.60+"px";
-    document.getElementById('myChart').style.height = window.innerHeight*.40+"px";
+      document.getElementById('map').style.height = window.innerHeight*.60+"px";
+      document.getElementById('myChart').style.height = window.innerHeight*.40+"px";
     </script>
     <script src="src/js/Charts.js"></script>
     <script src="src/js/Map.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZvfnTZCqtieHQH1Vsmby3kT_sGZ5K1UI&callback=initMap"></script>
-    </body>
+  </body>
 </html>

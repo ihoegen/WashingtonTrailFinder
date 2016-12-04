@@ -11,31 +11,31 @@ function buildGraph(CoordArray, LabelArray) {
     }
   }
   myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-          labels: LabelArray,
-          datasets: [{
-              label: 'Elevation',
-              data: CoordArray,
-          }]
-      },
-      options: {
-          scales: {
-              height: 180,
-              yAxes: [{
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Elevation'
-                }
-          }],
-          xAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: 'Distance in Feet'
-            }
-          }]
-        }
+    type: 'line',
+    data: {
+      labels: LabelArray,
+      datasets: [{
+        label: 'Elevation',
+        data: CoordArray,
+      }]
+    },
+    options: {
+      scales: {
+        height: 180,
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Elevation'
+          }
+        }],
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Distance in Feet'
+          }
+        }]
       }
+    }
   });
 }
 
@@ -48,7 +48,7 @@ function traverseLine(path) {
       var nextCoord = new Coordinate(path.getAt(i+1).lat(), path.getAt(i+1).lng());
       var latDif = (nextCoord.lat - coord.lat)/10;
       var lngDif = (nextCoord.lng - coord.lng)/10;
-      for (var j = 1; j <= 10; j++) {
+      for (var j = 1; j < 10; j++) {
         newPath.push(new Coordinate(coord.lat + (j*latDif), coord.lng+ (j*lngDif)));
       }
     }
@@ -82,8 +82,8 @@ function calculateDistance(Coord1, Coord2) {
   Assumes that the earth radius is 6,371 KM
   */
   var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+  Math.sin(dLon / 2) * Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var distance = radiusOfEarth * c;
   distance = parseFloat(distance).toFixed(2);

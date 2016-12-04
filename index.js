@@ -12,7 +12,6 @@ app.use(express.static('public'));
 
 app.post('/api/elevation', function (req, res){
   var exec = require('child_process').exec;
-  console.log(req.body);
   var lat = req.body.lat;
   var lng = req.body.lng;
   var child = exec('java -cp ./src/java/ Coordinates ' + lat + " " + lng, {cwd: './'}, function(err, stdout, stderr) {
@@ -22,6 +21,4 @@ app.post('/api/elevation', function (req, res){
 });
 
 
-app.listen(8000, function () {
-  console.log('Example app listening on port 8000!');
-});
+app.listen(8000);

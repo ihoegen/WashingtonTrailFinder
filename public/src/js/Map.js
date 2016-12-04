@@ -23,10 +23,13 @@ function logElevation(path) {
       labels.push(calculateDistance(coordsAtLoc, new Coordinate(path[i+1].lat, path[i+1].lng)) + labels[i]);
     }
     getElevation(coordsAtLoc, function(data) {
-      console.log(100*array.length/path.length + "% complete")
+      var progress = Math.round(100*array.length/path.length) + "% complete";
+      console.log(progress);
+      document.getElementById('loading').innerHTML = progress;
       array.push(data);
       if(array.length == path.length) {
         buildGraph(array, labels);
+        document.getElementById('loading').innerHTML = "";
       }
     });
   }
