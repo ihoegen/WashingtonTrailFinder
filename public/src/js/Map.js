@@ -15,12 +15,18 @@ function closePolyLine() {
 
 
 function logElevation(path) {
+  var labels = [0];
+  var array = [];
   for (var i = 0; i < path.length; i++) {
-    var array = [];
-    getElevation(new Coordinate(path[i].lat, path[i].lng), function(data) {
+    var coordsAtLoc = new Coordinate(path[i].lat, path[i].lng);
+    if (i !== path.length - 1) {
+      labels.push(calculateDistance(coordsAtLoc, new Coordinate(path[i+1].lat, path[i+1].lng)) + labels[i]);
+    }
+    getElevation(coordsAtLoc, function(data) {
+      console.log(100*array.length/path.length + "% complete")
       array.push(data);
       if(array.length == path.length) {
-        buildGraph(array);
+        buildGraph(array, labels);
       }
     });
   }
@@ -34,7 +40,7 @@ function addLatLng(event) {
 function initMap() {
   var uluru = {lat: 47.582127, lng: -122.1495682};
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 20,
+    zoom: 14,
     center: uluru
   });
 
@@ -44,10 +50,6 @@ function initMap() {
     strokeWeight: 3
   });
 
-  var marker = new google.maps.Marker({
-    position: uluru,
-    map: map
-  });;
   map.addListener("bounds_changed", function(e) {
     // alert(map.getBounds());
   });
