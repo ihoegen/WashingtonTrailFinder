@@ -17,6 +17,7 @@ function buildGraph(CoordArray, LabelArray) {
       datasets: [{
         label: 'Elevation',
         data: CoordArray,
+        backgroundColor: 'rgba(74,158,241,.4)'
       }]
     },
     options: {
