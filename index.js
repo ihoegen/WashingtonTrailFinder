@@ -20,5 +20,20 @@ app.post('/api/elevation', function (req, res){
   });
 });
 
+app.post('/api/trails', function(req, res) {
+  var exec = require('child_process').exec;
+  var trailName = req.body;
+  var json = require('./public/resources/TrailMap.json');
+  var properties = [];
+  for(var i = 0; i < json.features.length; i++) {
+    properties.push(json.features[i]);
+  }
+  var trail = properties.filter(function(trail) {
+    return trail.properties.TR_NM === trailName
+  });
+  console.log(trail[0].geometry);
+  res.send(trail[0].geometry);
+})
+
 
 app.listen(8000);

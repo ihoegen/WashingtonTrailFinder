@@ -6,7 +6,7 @@ function closePolyLine() {
   poly = new google.maps.Polyline({
     strokeColor: '#000000',
     strokeOpacity: 1.0,
-    strokeWeight: 3
+    strokeWeight: 3,
   });
   // poly.addListener('click', closePolyLine);
   poly.addListener('click', closePolyLine);
@@ -41,6 +41,7 @@ function addLatLng(event) {
 }
 
 function initMap() {
+  var path = getTrailCoords('Crystal Lake');
   var uluru = {lat: 47.582127, lng: -122.1495682};
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
@@ -50,7 +51,8 @@ function initMap() {
   poly = new google.maps.Polyline({
     strokeColor: '#000000',
     strokeOpacity: 1.0,
-    strokeWeight: 3
+    strokeWeight: 3,
+    path: path
   });
 
   map.addListener("bounds_changed", function(e) {
@@ -99,5 +101,13 @@ function getElevation(CoordinateObj, callback) {
   }).done(function(data) {
     callback(parseFloat(data))
   });
-
+}
+function getTrailCoords(trail, callback) {
+  $.ajax({
+    type: 'POST',
+    url: '/api/trails',
+    data: trail
+  }).done(function(data) {
+    callback(data)
+  });
 }
