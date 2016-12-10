@@ -2,7 +2,7 @@ var express = require('express');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var request = require('request');
-
+var json = require('./public/resources/TrailMap.json');
 
 
 var app = express();
@@ -23,28 +23,21 @@ app.post('/api/elevation', function (req, res){
 });
 
 app.post('/api/trails', function(req, res) {
-  var json = require('./public/resources/TrailMap.json');
-  var properties = [];
-
   var properties = json.features.map(function(x) {
     return x;
   });
-  function Coordinate(lat, lng) {
-    this.lat = lat;
-    this.lng = lng;
-  }
-  var crystalLake = properties.filter(function(trail) {
+  var trails = properties.filter(function(trail) {
     return trail.properties.TR_NUM === '810'
   });
-  var crystalLakeCoords = crystalLake.map(function(e) {
+  var jsonCoords = trails.map(function(e) {
     return e.geometry.coordinates;
   });
   //This is just how the JSON file is, there's an array of an array...
-  var gmapsReadyCoords = crystalLakeCoords[0].map(function(x) {
+  var coords = jsonCoords[0].map(function(x) {
     return {lat: x[1], lng: x[0]};
   });
-  res.send(gmapsReadyCoords);
-})
+  res.send(coords);
+});
 
 
 app.listen(8000);

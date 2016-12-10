@@ -2,6 +2,8 @@ var map;
 var poly;
 var crystal;
 var datasetCount;
+var elevator;
+
 function closePolyLine() {
   logElevation(traverseLine(poly.getPath()));
   poly = new google.maps.Polyline({
@@ -65,9 +67,11 @@ function addLatLng(event) {
 }
 
 function initMap() {
+  elevator = new google.maps.ElevationService;
+
   var uluru = {lat: 47.582127, lng: -122.1495682};
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14,
+    zoom: 12,
     center: uluru
   });
 
@@ -80,13 +84,9 @@ function initMap() {
     strokeColor: '#000000',
     strokeOpacity: 1.0,
     strokeWeight: 3,
+    geodesic: true,
     map: map
   });
-
-  crystal.addListener('click', function() {
-    logElevationNoTraversal(crystal.getPath().getArray());
-  })
-
   map.addListener("bounds_changed", function(e) {
     // alert(map.getBounds());
   });
@@ -98,12 +98,16 @@ function initMap() {
   map.addListener('click', addLatLng);
 
   getTrailCoords('Crystal Lake', function(data) {
-    console.log(data);
+    elevator.getElevationAlongPath({
+      'path': data,
+      'samples': 256
+    },buildGraph);
     crystal.setPath(data);
-    crystal.getPath().getArray().map(function(x) {
-      console.log(x.lat() + ", " + x.lng());
-    })
+    map.setCenter(data[Math.round(data.length / 2)]);
   });
+
+
+
   var overlay;
 }
 

@@ -1,24 +1,22 @@
 var myChart;
-function buildGraph(CoordArray, LabelArray) {
-  console.log(LabelArray);
-  console.log('buildGraph');
-  var ctx = document.getElementById("myChart");
-  var labelArray = LabelArray || [];
-  console.log(CoordArray.length);
-  if (!LabelArray) {
-    for (var i = 0; i < CoordArray.length; i ++) {
-      if(i % 50 === 0){
-        labelArray.push(i);
-      }
-    }
+function buildGraph(elevations, status) {
+  console.log(elevations);
+  var elevationValues = elevations.map(function(x) {
+    return x.elevation;
+  });
+  var labels = [];
+  for(i = 0; i < elevations.length; i++) {
+    labels.push(i);
   }
+  var ctx = document.getElementById("myChart");
+  console.log(ctx);
   myChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: LabelArray,
+      labels: labels,
       datasets: [{
         label: 'Elevation',
-        data: CoordArray,
+        data: elevationValues,
         backgroundColor: 'rgba(74,158,241,.4)'
       }]
     },
