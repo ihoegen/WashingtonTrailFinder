@@ -7,7 +7,9 @@ function buildGraph(CoordArray, LabelArray) {
   console.log(CoordArray.length);
   if (!LabelArray) {
     for (var i = 0; i < CoordArray.length; i ++) {
-      labelArray.push(i);
+      if(i % 50 === 0){
+        labelArray.push(i);
+      }
     }
   }
   myChart = new Chart(ctx, {

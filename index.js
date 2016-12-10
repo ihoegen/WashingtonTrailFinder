@@ -34,7 +34,7 @@ app.post('/api/trails', function(req, res) {
     this.lng = lng;
   }
   var crystalLake = properties.filter(function(trail) {
-    return trail.properties.TR_NM === 'Crystal Lake'
+    return trail.properties.TR_NUM === '810'
   });
   var crystalLakeCoords = crystalLake.map(function(e) {
     return e.geometry.coordinates;
