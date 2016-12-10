@@ -1,5 +1,6 @@
 var map;
 var poly;
+var crystal;
 var datasetCount;
 function closePolyLine() {
   logElevation(traverseLine(poly.getPath()));
@@ -34,6 +35,29 @@ function logElevation(path) {
     });
   }
 }
+function logElevationNoTraversal(path) {
+  var labels = [0];
+  var array = [];
+  for (var i = 0; i < path.length; i++) {
+    var coordsAtLoc = new Coordinate(path[i].lat(), path[i].lng());
+    if (i !== path.length - 1) {
+      labels.push(calculateDistance(coordsAtLoc, new Coordinate(path[i+1].lat, path[i+1].lng)) + labels[i]);
+    }
+    getElevation(coordsAtLoc, function(data) {
+      var progress = Math.round(100*array.length/path.length) + "% complete";
+      console.log(progress);
+      document.getElementById('loading').innerHTML = progress;
+      array.push(data);
+      if(array.length == path.length) {
+        buildGraph(array, labels);
+        document.getElementById('loading').innerHTML = "";
+      }
+    });
+  }
+}
+
+
+
 // Handles click events on a map, and adds a new point to the Polyline.
 function addLatLng(event) {
   var path = poly.getPath();
@@ -41,7 +65,6 @@ function addLatLng(event) {
 }
 
 function initMap() {
-  var path = getTrailCoords('Crystal Lake');
   var uluru = {lat: 47.582127, lng: -122.1495682};
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
@@ -52,8 +75,17 @@ function initMap() {
     strokeColor: '#000000',
     strokeOpacity: 1.0,
     strokeWeight: 3,
-    path: path
   });
+  crystal = new google.maps.Polyline({
+    strokeColor: '#000000',
+    strokeOpacity: 1.0,
+    strokeWeight: 3,
+    map: map
+  });
+
+  crystal.addListener('click', function() {
+    logElevationNoTraversal(crystal.getPath().getArray());
+  })
 
   map.addListener("bounds_changed", function(e) {
     // alert(map.getBounds());
@@ -65,6 +97,13 @@ function initMap() {
   // Add a listener for the click event
   map.addListener('click', addLatLng);
 
+  getTrailCoords('Crystal Lake', function(data) {
+    console.log(data);
+    crystal.setPath(data);
+    crystal.getPath().getArray().map(function(x) {
+      console.log(x.lat() + ", " + x.lng());
+    })
+  });
   var overlay;
 }
 
@@ -103,11 +142,15 @@ function getElevation(CoordinateObj, callback) {
   });
 }
 function getTrailCoords(trail, callback) {
+  var coords;
   $.ajax({
     type: 'POST',
     url: '/api/trails',
     data: trail
   }).done(function(data) {
-    callback(data)
+    myGoogleCoords = data.map(function(x) {
+      return new google.maps.LatLng({lat: x.lat, lng: x.lng});
+    });
+    callback(myGoogleCoords);
   });
 }
