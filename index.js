@@ -21,15 +21,6 @@ app.get('/', function(req, res) {
   });
 });
 
-app.post('/api/elevation', function (req, res){
-  var exec = require('child_process').exec;
-  var lat = req.body.lat;
-  var lng = req.body.lng;
-  var child = exec('java -cp ./src/java/ Elevation ' + lat + " " + lng, {cwd: './'}, function(err, stdout, stderr) {
-    var result = JSON.parse(stdout);
-    res.send(result.results[0].elevation + "");
-  });
-});
 
 app.post('/api/trails', function(req, res) {
   var properties = json.features.map(function(x) {

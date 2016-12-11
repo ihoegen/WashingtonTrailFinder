@@ -29,16 +29,6 @@ function initMap() {
   });
 }
 
-
-function getElevation(CoordinateObj, callback) {
-  $.ajax({
-    type: 'POST',
-    url: '/api/elevation/',
-    data: CoordinateObj,
-  }).done(function(data) {
-    callback(parseFloat(data))
-  });
-}
 function getTrailCoords(trail, callback) {
   var coords;
   $.ajax({
