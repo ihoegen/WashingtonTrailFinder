@@ -5,11 +5,7 @@ function buildGraph(elevations, status) {
   });
   var labels = [];
   for(i = 0; i < elevations.length; i++) {
-    if(i % 25 === 0) {
-      labels.push(i);
-    } else {
-      labels.push("");
-    }
+    labels.push(i);
   }
   var ctx = document.getElementById("myChart");
   myChart = new Chart(ctx, {
