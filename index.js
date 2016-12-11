@@ -13,7 +13,9 @@ app.use(bodyParser());
 
 app.get('/', function(req, res) {
   fs.readFile('./public/index.html', (err, data) => {
-    if (err) throw err;
+    if (err) {
+      res.send(err);
+    }
     app.use(express.static('public'));
     res.send(data.toString());
     console.log(data);
