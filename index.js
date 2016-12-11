@@ -10,8 +10,15 @@ var app = express();
 
 app.use(bodyParser());
 
-app.use(express.static('public'));
 
+app.get('/', function(req, res) {
+  fs.readFile('./public/index.html', (err, data) => {
+    if (err) throw err;
+    app.use(express.static('public'));
+    res.send(data.toString());
+    console.log(data);
+  });
+});
 app.post('/api/elevation', function (req, res){
   var exec = require('child_process').exec;
   var lat = req.body.lat;
