@@ -16,7 +16,7 @@ app.get('/', function(req, res) {
     if (err) {
       res.send(err);
     }
-    app.use(express.static('public'));
+    // app.use(express.static('public'));
     res.send(data.toString());
     console.log(data);
   });
