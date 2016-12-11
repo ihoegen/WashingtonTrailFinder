@@ -1,6 +1,5 @@
 var myChart;
 function buildGraph(elevations, status) {
-  console.log(elevations);
   var elevationValues = elevations.map(function(x) {
     return x.elevation;
   });
@@ -13,7 +12,6 @@ function buildGraph(elevations, status) {
     }
   }
   var ctx = document.getElementById("myChart");
-  console.log(ctx);
   myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -43,24 +41,6 @@ function buildGraph(elevations, status) {
     }
   });
 }
-
-function traverseLine(path) {
-  var newPath = []
-  for (var i = 0; i < path.getLength(); i++) {
-    var coord = new Coordinate(path.getAt(i).lat(), path.getAt(i).lng());
-    newPath.push(coord);
-    if (i+1 < path.getLength()) {
-      var nextCoord = new Coordinate(path.getAt(i+1).lat(), path.getAt(i+1).lng());
-      var latDif = (nextCoord.lat - coord.lat)/10;
-      var lngDif = (nextCoord.lng - coord.lng)/10;
-      for (var j = 1; j < 10; j++) {
-        newPath.push(new Coordinate(coord.lat + (j*latDif), coord.lng+ (j*lngDif)));
-      }
-    }
-  }
-  return newPath;
-}
-
 //Converts coordinates in degrees to radians.
 function toRad(degrees) {
   return degrees * Math.PI / 180;

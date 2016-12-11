@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head profile="github.com/ihoegen/WTA-Trailmap.com">
+    <link rel="icon"
+    type="image/jpg"
+    href="resources/favicon.jpg">
     <style>
        #map, #myChart {
         width: 100%;
        }
     </style>
     <meta charset="UTF-8" />
-    <title>BCHacks</title>
+    <title>Trails</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="./resources/Chart.js"></script>
@@ -19,11 +23,10 @@
     <script>
       document.getElementById('map').style.height = window.innerHeight*.60+"px";
       var c = $("#myChart"), ctx = c[0].getContext('2d');
-      console.log(window.innerWidth);
+
       if (window.innerWidth < 500) {
         ctx.canvas.height = window.innerHeight * .4 + "px";
       } else if (window.innerWidth < 1000) {
-        console.log();
         ctx.canvas.height = 100;
       }
     </script>

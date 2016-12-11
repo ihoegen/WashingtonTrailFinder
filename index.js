@@ -6,21 +6,9 @@ var json = require('./public/resources/TrailMap.json');
 
 
 var app = express();
-
-
 app.use(bodyParser());
-
 app.use(express.static('public'));
 
-app.post('/api/elevation', function (req, res){
-  var exec = require('child_process').exec;
-  var lat = req.body.lat;
-  var lng = req.body.lng;
-  var child = exec('java -cp ./src/java/ Elevation ' + lat + " " + lng, {cwd: './'}, function(err, stdout, stderr) {
-    var result = JSON.parse(stdout);
-    res.send(result.results[0].elevation + "");
-  });
-});
 
 app.post('/api/trails', function(req, res) {
   var properties = json.features.map(function(x) {
@@ -35,6 +23,8 @@ app.post('/api/trails', function(req, res) {
   //This is just how the JSON file is, there's an array of an array...
   var coords = jsonCoords[0].map(function(x) {
     return {lat: x[1], lng: x[0]};
+  });
+  fs.appendFile("logs/ip_logs.db", (req.headers['x-forwarded-for'] + " On " + new Date() + "\r\n"), function(err) {
   });
   res.send(coords);
 });
