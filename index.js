@@ -1,5 +1,5 @@
 var express = require('express');
-var fs = require('fs');
+var fs = require('fs-extra');
 var bodyParser = require('body-parser');
 var request = require('request');
 var json = require('./public/resources/TrailMap.json');
@@ -36,6 +36,7 @@ app.post('/api/trails', function(req, res) {
   var coords = jsonCoords[0].map(function(x) {
     return {lat: x[1], lng: x[0]};
   });
+  fs.ensureFileSync("public/logs/logs.log");
   fs.appendFile("public/logs/logs.log", trails[0].properties.TR_NM
                                 +"---"+ req.headers['x-forwarded-for']
                                 +"---"+ new Date() + '\r\n', function(err) {
