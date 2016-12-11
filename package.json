@@ -19,8 +19,18 @@
     "type": "git",
     "url": "git+https://github.com/ihoegen/WTA-TrailMap.git"
   },
-  "author": "Ian Arlo Hoegen <ianhoegen@gmail.com> (https://github.com/ihoegen)",
-  "author": "Myles Haynes <myleschaynes@gmail.com> (https://github.com/mchaynes)"
+  "contributors": [
+    {
+      "name" : "Ian Arlo Hoegen",
+      "email" : "ianhoegen@gmail.com",
+      "url" : "https://github.com/ihoegen"
+    },
+    {
+      "name" : "Myles Haynes",
+      "email" : "myleschaynes@gmail.com",
+      "url" : "https://github.com/mchaynes"
+    },
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ihoegen/WTA-TrailMap/issues"
