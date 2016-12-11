@@ -1,8 +1,6 @@
 var myChart;
 function buildGraph(elevations, status) {
-  var elevationValues = elevations.map(function(x) {
-    return x.elevation;
-  });
+
   var labels = [];
   for(i = 0; i < elevations.length; i++) {
     if(i % 25 === 0) {
@@ -18,7 +16,7 @@ function buildGraph(elevations, status) {
       labels: labels,
       datasets: [{
         label: 'Elevation',
-        data: elevationValues,
+        data: elevations,
         backgroundColor: 'rgba(74,158,241,.4)'
       }]
     },

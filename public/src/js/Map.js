@@ -23,7 +23,12 @@ function initMap() {
     elevator.getElevationAlongPath({
       'path': data,
       'samples': 256
-    },buildGraph);
+    },function(data) {
+      var feet = data.map(function(x) {
+        return x.elevation * 3.28084;
+      });
+      buildGraph(feet);
+    });
     trail.setPath(data);
     //Middle-ish of trail.
     map.setCenter(data[Math.round(data.length / 2)]);
