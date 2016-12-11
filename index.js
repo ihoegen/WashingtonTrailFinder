@@ -10,7 +10,17 @@ var app = express();
 
 app.use(bodyParser());
 
-app.use(express.static('public'));
+
+app.get('/', function(req, res) {
+  fs.readFile('./public/index.html', (err, data) => {
+    // if (err) throw err;
+    if (err) {
+      res.send(err);
+    }
+    app.use(express.static('public'));
+    res.send(data.toString());
+  });
+});
 
 app.post('/api/elevation', function (req, res){
   var exec = require('child_process').exec;
@@ -40,4 +50,4 @@ app.post('/api/trails', function(req, res) {
 });
 
 
-app.listen(8000);
+app.listen(process.env.PORT || 8000)
