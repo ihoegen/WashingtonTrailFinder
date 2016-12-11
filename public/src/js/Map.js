@@ -6,6 +6,7 @@ function initMap() {
   elevator = new google.maps.ElevationService;
   var uluru = {lat: 47.582127, lng: -122.1495682};
   map = new google.maps.Map(document.getElementById('map'), {
+    mapTypeId: 'terrain',
     zoom: 12,
     center: uluru
   });
