@@ -1,10 +1,10 @@
 # WTA-TrailMap
 A tool to discover the elevation change of your route, built at BC Hacks
+Check out current running server at: https://wta-trails-app.herokuapp.com/
 
 # Prerequisites
 
 This is a Node.js application, so you need to have that installed, along with NPM.
-Also, the server runs on Java, so you'll need that and Javac.
 
 # Setup
 1. Clone the Repo
