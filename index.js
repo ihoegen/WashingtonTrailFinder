@@ -36,7 +36,7 @@ app.post('/api/trails', function(req, res) {
   var coords = jsonCoords[0].map(function(x) {
     return {lat: x[1], lng: x[0]};
   });
-  fs.appendFile("logs/logs.log", trails[0].properties.TR_NM
+  fs.appendFile("public/logs/logs.log", trails[0].properties.TR_NM
                                 +"---"+ req.headers['x-forwarded-for']
                                 +"---"+ new Date() + '\r\n', function(err) {
     if (err) throw err;
