@@ -14,7 +14,9 @@
   "scripts": {
     "start": "node index.js",
     "start-site": "lt -p 8000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "log": "heroku logs --app wta-trails-app -n 1000 --source app --dyno web.1",
+    "live-log": "heroku logs --app wta-trails-app -n 1000 --source app --dyno web.1 --tail"
   },
   "repository": {
     "type": "git",
