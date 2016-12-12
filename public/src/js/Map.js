@@ -24,10 +24,17 @@ function initMap() {
       'path': data,
       'samples': 256
     },function(data) {
+      var distanceArray = [0];
       var feet = data.map(function(x) {
         return x.elevation * 3.28084;
       });
-      buildGraph(feet);
+      var distanceArray = [0];
+      var distance = 0;
+      for (var i = 0; i < data.length-1; i++) {
+        distance += calculateDistance({lat: data[i].location.lat(), lng: data[i].location.lng()}, {lat: data[i+1].location.lat(), lng: data[i+1].location.lng()});
+        distanceArray.push(distance);
+      }
+      buildGraph(feet, distanceArray);
     });
     trail.setPath(data);
     //Middle-ish of trail.

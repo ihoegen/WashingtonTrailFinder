@@ -1,19 +1,29 @@
 var myChart;
-function buildGraph(elevations, status) {
-
-  var labels = [];
-  for(i = 0; i < elevations.length; i++) {
-    if(i % 25 === 0) {
-      labels.push(i);
+function buildGraph(elevations, trailLabels, status) {
+  var divisionFactor = Math.round(trailLabels.length/(4*window.innerWidth/400));
+  var displayAsMiles = false;
+  var bottomLabel = 'Distance in ';
+  if (trailLabels[trailLabels.length-1]/5280 > .5) {
+    displayAsMiles = true;
+    trailLabels[trailLabels.length-1] = (trailLabels[trailLabels.length-1]/5280).toFixed(2);
+    bottomLabel+= 'miles';
+  } else {
+    trailLabels[trailLabels.length-1] = (trailLabels[trailLabels.length-1]).toFixed(2);
+    bottomLabel+= 'feet';
+  }
+  for(i = 0; i < trailLabels.length-1; i++) {
+    if(i % (divisionFactor) === 0) {
+      trailLabels[i] = (displayAsMiles) ? (trailLabels[i]/5280) : (trailLabels[i]);
+      trailLabels[i] = trailLabels[i].toFixed(2);
     } else {
-      labels.push("");
+      trailLabels[i] = '';
     }
   }
-  var ctx = document.getElementById("myChart");
+  var ctx = document.getElementById('myChart');
   myChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: labels,
+      labels: trailLabels,
       datasets: [{
         label: 'Elevation',
         data: elevations,
@@ -32,7 +42,7 @@ function buildGraph(elevations, status) {
         xAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Distance in Feet'
+            labelString: bottomLabel
           }
         }]
       }
@@ -69,8 +79,8 @@ function calculateDistance(Coord1, Coord2) {
   Math.sin(dLon / 2) * Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var distance = radiusOfEarth * c;
-  distance = parseFloat(distance).toFixed(2);
+  distance = parseFloat(distance);
   var distanceInMiles = 0.62137119 * distance
-  distanceInMiles = parseFloat(distanceInMiles).toFixed(2);
-  return Math.round(distanceInMiles*5280);
+  distanceInMiles = parseFloat(distanceInMiles);
+  return Math.abs(distanceInMiles*5280);
 }
