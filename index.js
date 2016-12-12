@@ -8,7 +8,7 @@ var json = require('./public/resources/TrailMap.json');
 var app = express();
 
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
   fs.readFile('./public/index.html', (err, data) => {
