@@ -27,7 +27,7 @@ app.post('/api/trails', function(req, res) {
     return x;
   });
   var trails = properties.filter(function(trail) {
-    return trail.properties.TR_NUM === '810'
+    return trail.properties.TR_NUM === '808'
   });
   var jsonCoords = trails.map(function(e) {
     return e.geometry.coordinates;
@@ -44,6 +44,11 @@ app.post('/api/trails', function(req, res) {
   });
   res.send(coords);
 });
+
+app.post('/api/alltrails',function(req, res) {
+  console.log('Loaded. Sending data...');
+  res.send(json);
+})
 
 
 app.listen(process.env.PORT || 8000);

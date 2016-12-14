@@ -42,6 +42,18 @@ function initMap() {
   });
 }
 
+document.getElementById("alltrails").addEventListener("click", function(){
+  console.log('clicked.')
+  var geoJSON;
+  $.ajax({
+    type: 'POST',
+    url: 'api/alltrails'
+  }).done(function(data) {
+    console.log('Recieved data');
+    map.data.addGeoJson(data);
+  });
+});
+
 function getTrailCoords(trail, callback) {
   var coords;
   $.ajax({
