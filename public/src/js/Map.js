@@ -28,7 +28,7 @@ function initMap() {
     //Filler.
   });
 
-  var t = new Trail('810');
+  var t = new Trail('Lena Lake Trail');
   loadNewGraph(t);
 }
 
@@ -56,14 +56,6 @@ function loadNewGraph(t) {
   });
 }
 
-
-document.getElementById('search').addEventListener('submit', function() {
-  var newTrail = document.getElementById('trailName').value;
-
-  loadNewGraph(new Trail(newTrail));
-})
-
-
 var i = -1;
 function loadGeoJSON() {
   i++;
@@ -73,33 +65,31 @@ function loadGeoJSON() {
     map.data.addGeoJson(allJSON.features[i], loadGeoJSON());
   }
 }
-
-document.getElementById("alltrails").addEventListener("click", function(){
-  console.log('clicked.')
-  var geoJSON;
-  $.ajax({
-    type: 'POST',
-    url: 'api/alltrails'
-  }).done(function(data) {
-    console.log('Recieved data');
-    allJSON = data;
-    loadGeoJSON();
-  });
-});
+// 
+// document.getElementById("alltrails").addEventListener("click", function(){
+//   console.log('clicked.')
+//   var geoJSON;
+//   $.ajax({
+//     type: 'POST',
+//     url: 'api/alltrails'
+//   }).done(function(data) {
+//     console.log('Recieved data');
+//     allJSON = data;
+//     loadGeoJSON();
+//   });
+// });
 
 function getTrailNames(callback) {
   $.ajax({
-    type: 'POST',
+    type: 'GET',
     url: '/api/trailnames'
   }).done(function(data) {
     trailNames = data.map(function(x) {
-      console.log(x);
       return x;
     });
-
+    callback(trailNames);
   })
 }
-
 
 function getTrailCoords(trailObj, callback) {
   console.log(trailObj);

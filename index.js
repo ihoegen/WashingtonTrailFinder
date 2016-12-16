@@ -22,7 +22,7 @@ app.get('/', function(req, res) {
 });
 
 
-app.post('/api/trailnames', function(req, res) {
+app.get('/api/trailnames', function(req, res) {
   var names = json.features.map(function(x) {
     return x.properties.TR_NM;
   });
@@ -35,22 +35,33 @@ app.post('/api/trails', function(req, res) {
     return x;
   });
   var trails = properties.filter(function(trail) {
-    return trail.properties.TR_NUM === req.body.name;
+    if (trail.properties.TR_NM && req.body.name) {
+      return trail.properties.TR_NM.trim().toUpperCase() === req.body.name.trim().toUpperCase();
+    }
   });
   var jsonCoords = trails.map(function(e) {
     return e.geometry.coordinates;
   });
+  var coords;
   //This is just how the JSON file is, there's an array of an array...
-  var coords = jsonCoords[0].map(function(x) {
-    return {lat: x[1], lng: x[0]};
-  });
-  var log = trails[0].properties.TR_NM +"---"+ req.headers['x-forwarded-for']+"---"+ new Date() + '\r\n';
+  if (jsonCoords[0]) {
+    coords = jsonCoords[0].map(function(x) {
+      return {lat: x[1], lng: x[0]};
+    });
+    var log = trails[0].properties.TR_NM +"---"+ req.headers['x-forwarded-for']+"---"+ new Date() + '\r\n';
+  } else {
+    var log = req.body.name  +"---"+ req.headers['x-forwarded-for']+"---"+ new Date() + '\r\n';
+  }
   console.log(log);
   fs.ensureFileSync("public/logs/logs.log");
   fs.appendFile("public/logs/logs.log", log, function(err) {
     if (err) throw err;
   });
-  res.send(coords);
+  if (coords) {
+    res.send(coords);
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 app.post('/api/alltrails',function(req, res) {
