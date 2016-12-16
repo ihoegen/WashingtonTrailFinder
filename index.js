@@ -8,7 +8,7 @@ var json = require('./public/resources/TrailMap.json');
 var app = express();
 
 
-app.use(bodyParser.json());
+app.use(bodyParser());
 
 app.get('/', function(req, res) {
   fs.readFile('./public/index.html', (err, data) => {
@@ -23,11 +23,12 @@ app.get('/', function(req, res) {
 
 
 app.post('/api/trails', function(req, res) {
+  console.log(req.body.name);
   var properties = json.features.map(function(x) {
     return x;
   });
   var trails = properties.filter(function(trail) {
-    return trail.properties.TR_NUM === '808'
+    return trail.properties.TR_NUM === req.body.name;
   });
   var jsonCoords = trails.map(function(e) {
     return e.geometry.coordinates;

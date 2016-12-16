@@ -1,6 +1,11 @@
 var map;
 var trail;
 var elevator;
+var allJSON;
+
+function Trail(name) {
+  this.name = name;
+}
 
 function initMap() {
   elevator = new google.maps.ElevationService;
@@ -18,8 +23,12 @@ function initMap() {
     map: map
   });
 
+  var t = new Trail('810');
+  loadNewGraph(t);
+}
 
-  getTrailCoords('Crystal Lake', function(data) {
+function loadNewGraph(t) {
+  getTrailCoords(t, function(data) {
     elevator.getElevationAlongPath({
       'path': data,
       'samples': 256
@@ -42,6 +51,24 @@ function initMap() {
   });
 }
 
+
+document.getElementById('search').addEventListener('submit', function() {
+  var newTrail = document.getElementById('trailName').value;
+
+  loadNewGraph(new Trail(newTrail));
+})
+
+
+var i = -1;
+function loadGeoJSON() {
+  i++;
+  //Serves up a tenth of the total data recieved
+  if(i < Math.round(allJSON.features.length / 10)) {
+    console.log(allJSON.features[i].properties.TR_NM);
+    map.data.addGeoJson(allJSON.features[i], loadGeoJSON());
+  }
+}
+
 document.getElementById("alltrails").addEventListener("click", function(){
   console.log('clicked.')
   var geoJSON;
@@ -50,16 +77,18 @@ document.getElementById("alltrails").addEventListener("click", function(){
     url: 'api/alltrails'
   }).done(function(data) {
     console.log('Recieved data');
-    map.data.addGeoJson(data);
+    allJSON = data;
+    loadGeoJSON();
   });
 });
 
-function getTrailCoords(trail, callback) {
-  var coords;
+
+function getTrailCoords(trailObj, callback) {
+  console.log(trailObj);
   $.ajax({
     type: 'POST',
     url: '/api/trails',
-    data: trail
+    data: trailObj,
   }).done(function(data) {
     myGoogleCoords = data.map(function(x) {
       return new google.maps.LatLng({lat: x.lat, lng: x.lng});
