@@ -1,7 +1,7 @@
 # WTA-TrailMap
 A tool to discover the elevation change of your route, built at BC Hacks
 
-Check out current running server at: https://wta-trails-app.herokuapp.com/
+Check out current running server at: https://washingtontrailfinder.herokuapp.com/
 
 # Prerequisites
 
