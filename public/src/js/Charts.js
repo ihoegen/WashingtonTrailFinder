@@ -1,8 +1,15 @@
 var myChart;
-function buildGraph(elevations, trailLabels, status) {
+var elevations;
+var trailLabels;
+var bottomLabel;
+
+
+function updateData(elevations, trailLabels) {
+  trailLabels = trailLabels;
+  elevations = elevations;
   var divisionFactor = Math.round(trailLabels.length/(4*window.innerWidth/400));
   var displayAsMiles = false;
-  var bottomLabel = 'Distance in ';
+  bottomLabel = 'Distance in ';
   if (trailLabels[trailLabels.length-1]/5280 > .5) {
     displayAsMiles = true;
     trailLabels[trailLabels.length-1] = (trailLabels[trailLabels.length-1]/5280).toFixed(2);
@@ -19,6 +26,10 @@ function buildGraph(elevations, trailLabels, status) {
       trailLabels[i] = '';
     }
   }
+}
+
+function buildGraph(elevations, trailLabels, status) {
+  updateData(elevations, trailLabels);
   var ctx = document.getElementById('myChart');
   myChart = new Chart(ctx, {
     type: 'line',
@@ -49,6 +60,19 @@ function buildGraph(elevations, trailLabels, status) {
     }
   });
 }
+
+function updateGraph(elevations, trailLabels, status) {
+  updateData(elevations, trailLabels);
+  myChart.data.datasets[0].data = elevations;
+  myChart.data.labels = trailLabels;
+  myChart.options.scales.xAxes[0].scaleLabel.labelString = bottomLabel;
+  myChart.update();
+
+
+}
+
+
+
 //Converts coordinates in degrees to radians.
 function toRad(degrees) {
   return degrees * Math.PI / 180;

@@ -29,10 +29,10 @@ function initMap() {
   });
 
   var t = new Trail('Lena Lake Trail');
-  loadNewGraph(t);
+  loadNewGraph(t, buildGraph);
 }
 
-function loadNewGraph(t) {
+function loadNewGraph(t, graphFunction) {
   getTrailCoords(t, function(data) {
     elevator.getElevationAlongPath({
       'path': data,
@@ -48,7 +48,7 @@ function loadNewGraph(t) {
         distance += calculateDistance({lat: data[i].location.lat(), lng: data[i].location.lng()}, {lat: data[i+1].location.lat(), lng: data[i+1].location.lng()});
         distanceArray.push(distance);
       }
-      buildGraph(feet, distanceArray);
+      graphFunction(feet, distanceArray);
     });
     trail.setPath(data);
     //Middle-ish of trail.
@@ -56,16 +56,16 @@ function loadNewGraph(t) {
   });
 }
 
-var i = -1;
-function loadGeoJSON() {
-  i++;
-  //Serves up a tenth of the total data recieved
-  if(i < Math.round(allJSON.features.length / 10)) {
-    console.log(allJSON.features[i].properties.TR_NM);
-    map.data.addGeoJson(allJSON.features[i], loadGeoJSON());
-  }
-}
-// 
+// var i = -1;
+// function loadGeoJSON() {
+//   i++;
+//   //Serves up a tenth of the total data recieved
+//   if(i < Math.round(allJSON.features.length / 10)) {
+//     console.log(allJSON.features[i].properties.TR_NM);
+//     map.data.addGeoJson(allJSON.features[i], loadGeoJSON());
+//   }
+// }
+//
 // document.getElementById("alltrails").addEventListener("click", function(){
 //   console.log('clicked.')
 //   var geoJSON;
