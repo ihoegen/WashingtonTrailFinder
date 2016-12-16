@@ -3,6 +3,8 @@ var trail;
 var elevator;
 var allJSON;
 
+var trailNames = {};
+
 function Trail(name) {
   this.name = name;
 }
@@ -21,6 +23,9 @@ function initMap() {
     strokeWeight: 2,
     geodesic: true,
     map: map
+  });
+  getTrailNames(function() {
+    //Filler.
   });
 
   var t = new Trail('810');
@@ -81,6 +86,19 @@ document.getElementById("alltrails").addEventListener("click", function(){
     loadGeoJSON();
   });
 });
+
+function getTrailNames(callback) {
+  $.ajax({
+    type: 'POST',
+    url: '/api/trailnames'
+  }).done(function(data) {
+    trailNames = data.map(function(x) {
+      console.log(x);
+      return x;
+    });
+
+  })
+}
 
 
 function getTrailCoords(trailObj, callback) {

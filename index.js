@@ -22,6 +22,13 @@ app.get('/', function(req, res) {
 });
 
 
+app.post('/api/trailnames', function(req, res) {
+  var names = json.features.map(function(x) {
+    return x.properties.TR_NM;
+  });
+  res.send(names);
+})
+
 app.post('/api/trails', function(req, res) {
   console.log(req.body.name);
   var properties = json.features.map(function(x) {
