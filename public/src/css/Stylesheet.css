@@ -4,7 +4,8 @@ body{
 .sbx-google {
   display: inline-block;
   position: relative;
-  width: 500px;
+  width: 400px;
+  margin-bottom: 5px;
   height: 41px;
   white-space: nowrap;
   box-sizing: border-box;
