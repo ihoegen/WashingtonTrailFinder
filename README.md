@@ -1,4 +1,4 @@
-# WTA-TrailMap
+# Washington Trail Finder
 A tool to discover the elevation change of your route, built at BC Hacks
 
 Check out current running server at: https://washingtontrailfinder.herokuapp.com/
