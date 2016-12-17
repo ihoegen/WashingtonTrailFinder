@@ -28,6 +28,7 @@ function initMap() {
     //Filler.
   });
 
+
   var t = new Trail('Lena Lake Trail');
   loadNewGraph(t, buildGraph);
 }
@@ -53,6 +54,15 @@ function loadNewGraph(t, graphFunction) {
     trail.setPath(data);
     //Middle-ish of trail.
     map.setCenter(data[Math.round(data.length / 2)]);
+
+    google.maps.event.addListener(trail,"mouseover",function(){
+      this.setOptions({strokeColor: "#00FF00"});
+    });
+
+    google.maps.event.addListener(trail,"mouseout",function(){
+     this.setOptions({strokeColor: "#000000"});
+    });
+
   });
 }
 
