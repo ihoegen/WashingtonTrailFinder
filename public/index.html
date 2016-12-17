@@ -1,18 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head profile="github.com/ihoegen/WTA-Trailmap.com">
-    <link rel="icon"
-    type="image/jpg"
-    href="resources/favicon.jpg">
-    <style>
-       #map, #myChart {
-        width: 100%;
-       }
-    </style>
+    <link rel="icon" type="image/jpg" href="resources/favicon.gif">
     <meta charset="UTF-8" />
-    <title>Trails</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Washington Trail Finder</title>
     <link rel="stylesheet" href="src/css/Stylesheet.css" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lobster" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -51,23 +43,11 @@
       </div>
     </form>
     </div>
-    <script type="text/javascript">
-      document.querySelector('.searchbox [type="reset"]').addEventListener('click', function() {  this.parentNode.querySelector('input').focus();});
-    </script>
     <!-- <button id='alltrails' type='button'>Turn on all trails</button> -->
     <div id="map"></div>
     <p id="loading"></p>
     <canvas id="myChart" height="50"></canvas>
-    <script>
-      document.getElementById('map').style.height = window.innerHeight*.60+"px";
-      var c = $("#myChart"), ctx = c[0].getContext('2d');
-
-      if (window.innerWidth < 500) {
-        ctx.canvas.height = window.innerHeight * .4 + "px";
-      } else if (window.innerWidth < 1000) {
-        ctx.canvas.height = 100;
-      }
-    </script>
+    <script src="src/js/Bootstrapper.js"></script>
     <script src="src/js/Charts.js"></script>
     <script src="src/js/Map.js"></script>
     <script src="src/js/Search.js"></script>

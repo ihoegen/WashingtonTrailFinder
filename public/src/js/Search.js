@@ -11,5 +11,6 @@ getTrailNames(function(data) {
 document.getElementById('search').addEventListener('submit', function() {
   var newTrail = document.getElementById('trailNameInput').value;
   console.log(newTrail);
+  localStorage.setItem('lastTrail', newTrail);
   loadNewGraph(new Trail(newTrail), updateGraph);
-})
+});

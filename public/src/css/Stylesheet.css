@@ -1,6 +1,11 @@
 body{
   margin: 0;
 }
+
+#map, #myChart {
+ width: 100%;
+}
+
 .sbx-google {
   display: inline-block;
   position: relative;

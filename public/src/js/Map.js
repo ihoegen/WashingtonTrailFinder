@@ -28,9 +28,14 @@ function initMap() {
     //Filler.
   });
 
-
-  var t = new Trail('Lena Lake Trail');
-  loadNewGraph(t, buildGraph);
+  var lastTrail = localStorage.getItem('lastTrail');
+  if (lastTrail) {
+    document.getElementById('trailNameInput').value = lastTrail;
+    loadNewGraph(new Trail(lastTrail), buildGraph);
+  } else {
+    var t = new Trail('Lena Lake Trail');
+    loadNewGraph(t, buildGraph);
+  }
 }
 
 function loadNewGraph(t, graphFunction) {
