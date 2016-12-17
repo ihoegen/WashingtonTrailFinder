@@ -27,15 +27,17 @@ function initMap() {
   getTrailNames(function() {
     //Filler.
   });
-
-  var lastTrail = localStorage.getItem('lastTrail');
-  if (lastTrail) {
-    document.getElementById('trailNameInput').value = lastTrail;
-    loadNewGraph(new Trail(lastTrail), buildGraph);
-  } else {
-    var t = new Trail('Lena Lake Trail');
-    loadNewGraph(t, buildGraph);
-  }
+  google.charts.load('current', {packages: ['corechart', 'line']});
+  google.charts.setOnLoadCallback(function() {
+    var lastTrail = localStorage.getItem('lastTrail');
+    if (lastTrail) {
+      document.getElementById('trailNameInput').value = lastTrail;
+      loadNewGraph(new Trail(lastTrail), buildGraph);
+    } else {
+      var t = new Trail('Lena Lake Trail');
+      loadNewGraph(t, buildGraph);
+    }
+  });
 }
 
 function loadNewGraph(t, graphFunction) {
@@ -107,7 +109,6 @@ function getTrailNames(callback) {
 }
 
 function getTrailCoords(trailObj, callback) {
-  console.log(trailObj);
   $.ajax({
     type: 'POST',
     url: '/api/trails',

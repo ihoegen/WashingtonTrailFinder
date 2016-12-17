@@ -1,8 +1,6 @@
-var myChart;
 var elevations;
 var trailLabels;
 var bottomLabel;
-
 
 function updateData(elevations, trailLabels) {
   trailLabels = trailLabels;
@@ -12,66 +10,39 @@ function updateData(elevations, trailLabels) {
   bottomLabel = 'Distance in ';
   if (trailLabels[trailLabels.length-1]/5280 > .5) {
     displayAsMiles = true;
-    trailLabels[trailLabels.length-1] = (trailLabels[trailLabels.length-1]/5280).toFixed(2);
+    trailLabels[trailLabels.length-1] = (trailLabels[trailLabels.length-1]/5280);
     bottomLabel+= 'miles';
   } else {
-    trailLabels[trailLabels.length-1] = (trailLabels[trailLabels.length-1]).toFixed(2);
+    trailLabels[trailLabels.length-1] = (trailLabels[trailLabels.length-1]);
     bottomLabel+= 'feet';
   }
   for(i = 0; i < trailLabels.length-1; i++) {
-    if(i % (divisionFactor) === 0) {
-      trailLabels[i] = (displayAsMiles) ? (trailLabels[i]/5280) : (trailLabels[i]);
-      trailLabels[i] = trailLabels[i].toFixed(2);
-    } else {
-      trailLabels[i] = '';
-    }
+    trailLabels[i] = (displayAsMiles) ? (trailLabels[i]/5280) : (trailLabels[i]);
   }
 }
 
 function buildGraph(elevations, trailLabels, status) {
   updateData(elevations, trailLabels);
-  var ctx = document.getElementById('myChart');
-  myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: trailLabels,
-      datasets: [{
-        label: 'Elevation',
-        data: elevations,
-        backgroundColor: 'rgba(74,158,241,.4)'
-      }]
-    },
-    options: {
-      scales: {
-        height: 180,
-        yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: 'Elevation'
-          }
-        }],
-        xAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: bottomLabel
-          }
-        }]
-      }
-    }
-  });
+  var gChartData = [];
+  var gChart = new google.visualization.DataTable();
+  gChart.addColumn('number', 'Distance');
+  gChart.addColumn('number', 'Elevation');
+  for (var i in elevations) {
+    gChartData.push([trailLabels[i], elevations[i]]);
+  }
+  gChart.addRows(gChartData);
+  var options = {
+        hAxis: {
+          title: bottomLabel
+        },
+        vAxis: {
+          title: 'Elevation'
+        },
+        backgroundColor: 'white'
+      };
+  var chart = new google.visualization.LineChart(document.getElementById('elevChart'));
+  chart.draw(gChart, options);
 }
-
-function updateGraph(elevations, trailLabels, status) {
-  updateData(elevations, trailLabels);
-  myChart.data.datasets[0].data = elevations;
-  myChart.data.labels = trailLabels;
-  myChart.options.scales.xAxes[0].scaleLabel.labelString = bottomLabel;
-  myChart.update();
-
-
-}
-
-
 
 //Converts coordinates in degrees to radians.
 function toRad(degrees) {
