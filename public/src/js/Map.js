@@ -117,6 +117,7 @@ function getTrailCoords(trailObj, callback) {
     myGoogleCoords = data.map(function(x) {
       return new google.maps.LatLng({lat: x.lat, lng: x.lng});
     });
+    console.log(myGoogleCoords);
     callback(myGoogleCoords);
   });
 }

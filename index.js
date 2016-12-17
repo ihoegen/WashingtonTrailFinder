@@ -3,7 +3,10 @@ var fs = require('fs-extra');
 var bodyParser = require('body-parser');
 var request = require('request');
 var json = require('./public/resources/TrailMap.json');
-
+//Pre Processing FTW
+var names = json.features.map(function(x) {
+  return x.properties.TR_NM;
+});
 
 var app = express();
 
@@ -23,9 +26,6 @@ app.get('/', function(req, res) {
 
 
 app.get('/api/trailnames', function(req, res) {
-  var names = json.features.map(function(x) {
-    return x.properties.TR_NM;
-  });
   res.send(names);
 })
 
@@ -44,9 +44,9 @@ app.post('/api/trails', function(req, res) {
   });
   var coords;
   //This is just how the JSON file is, there's an array of an array...
-  if (jsonCoords[0]) {
-    coords = jsonCoords[0].map(function(x) {
-      return {lat: x[1], lng: x[0]};
+  if (jsonCoords[0][0]) {
+    coords = jsonCoords[0][0].map(function(x) {
+      return {lat: parseFloat((x[1])), lng: parseFloat(x[0])};
     });
     var log = trails[0].properties.TR_NM +"---"+ req.headers['x-forwarded-for']+"---"+ new Date() + '\r\n';
   } else {
