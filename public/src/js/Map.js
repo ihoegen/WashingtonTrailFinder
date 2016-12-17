@@ -59,9 +59,12 @@ function loadNewGraph(t, graphFunction) {
       graphFunction(feet, distanceArray);
     });
     trail.setPath(data);
-    //Middle-ish of trail.
-    map.setCenter(data[Math.round(data.length / 2)]);
-
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < data.length; i++) {
+      bounds.extend(data[i]);
+    }
+    map.setCenter(bounds.getCenter());
+    map.fitBounds(bounds);
     google.maps.event.addListener(trail,"mouseover",function(){
       this.setOptions({strokeColor: "#00FF00"});
     });
