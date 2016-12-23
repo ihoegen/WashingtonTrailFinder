@@ -1,3 +1,5 @@
+var request = require('request');
+
 var hikes;
 var WtaTrailheadSearch = {};
 WtaTrailheadSearch.setHikes = function(data) {
