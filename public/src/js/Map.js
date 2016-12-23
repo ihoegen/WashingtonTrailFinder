@@ -100,6 +100,7 @@ function loadNewGraph(t, graphFunction) {
 // });
 
 function getTrailNames(callback) {
+  $.ajax({type:'POST',url:'api/wtatrails', data: new Trail('Shangri La')});
   $.ajax({
     type: 'GET',
     url: '/api/trailnames'

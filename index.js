@@ -3,6 +3,8 @@ var fs = require('fs-extra');
 var bodyParser = require('body-parser');
 var request = require('request');
 var json = require('./public/resources/TrailMap.json');
+var http = require('http');
+var ogr2ogr = require('ogr2ogr');
 //Pre Processing FTW
 var names = json.features.map(function(x) {
   return x.properties.TR_NM;
@@ -26,7 +28,7 @@ app.get('/', function(req, res) {
 
 
 app.get('/api/trailnames', function(req, res) {
-  res.send(names);
+  res.send(hikes.map(x => {return x.name}));
 })
 
 app.post('/api/trails', function(req, res) {
@@ -63,6 +65,7 @@ app.post('/api/trails', function(req, res) {
     res.sendStatus(400);
   }
 });
+
 
 app.post('/api/alltrails',function(req, res) {
   console.log('Loaded. Sending data...');
