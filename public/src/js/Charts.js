@@ -1,13 +1,7 @@
-var elevations;
-var trailLabels;
-var bottomLabel;
-
 function updateData(elevations, trailLabels) {
-  trailLabels = trailLabels;
-  elevations = elevations;
   var divisionFactor = Math.round(trailLabels.length/(4*window.innerWidth/400));
   var displayAsMiles = false;
-  bottomLabel = 'Distance in ';
+  var bottomLabel = 'Distance in ';
   if (trailLabels[trailLabels.length-1]/5280 > .5) {
     displayAsMiles = true;
     trailLabels[trailLabels.length-1] = (trailLabels[trailLabels.length-1]/5280);
@@ -19,10 +13,18 @@ function updateData(elevations, trailLabels) {
   for(i = 0; i < trailLabels.length-1; i++) {
     trailLabels[i] = (displayAsMiles) ? (trailLabels[i]/5280) : (trailLabels[i]);
   }
+  return {
+    labels: trailLabels,
+    data: elevations,
+    bottomLabel: bottomLabel
+  };
 }
 
-function buildGraph(elevations, trailLabels, status) {
-  updateData(elevations, trailLabels);
+function buildGraph(data, labels) {
+  var trailData = updateData(data, labels);
+  var trailLabels = trailData.labels;
+  var elevations = trailData.data;
+  var bottomLabel = trailData.bottomLabel;
   var gChartData = [];
   var gChart = new google.visualization.DataTable();
   gChart.addColumn('number', 'Distance');
