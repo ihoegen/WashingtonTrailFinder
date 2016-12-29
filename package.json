@@ -8,6 +8,7 @@
     "chart.js": "^2.3.0",
     "express": "^4.14.0",
     "fs-extra": "^1.0.0",
+    "ogr2ogr": "^1.0.0",
     "request": "^2.79.0"
   },
   "devDependencies": {},
