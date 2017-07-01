@@ -92,7 +92,7 @@ app.get('/api/trail/:trailname', function(req, res) {
   });
   var coords;
   //This is just how the JSON file is, there's an array of an array...
-  if (trailCoords[0][0]) {
+  if (trailCoords && trailCoords[0] && trailCoords[0][0]) {
     coords = trailCoords[0][0].map(function(x) {
       return {lat: parseFloat((x[1])), lng: parseFloat(x[0])};
     });
