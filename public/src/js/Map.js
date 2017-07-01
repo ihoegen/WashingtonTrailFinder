@@ -19,6 +19,7 @@ function trailPersistence() {
   var lastTrail = localStorage.getItem('lastTrail');
   if (lastTrail) {
     document.getElementById('trailNameInput').value = lastTrail;
+      history.pushState(null, null, "/trail/" + lastTrail);
     loadNewGraph(new Trail(lastTrail), buildGraph);
   } else {
     var t = new Trail('Lena Lake Trail');

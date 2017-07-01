@@ -29,6 +29,12 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/trail/:trailname', function(req, res) {
+  app.use('/trail', express.static('public'))
+  console.log(req.param('trailname'));
+  res.redirect('/?trail=' + req.param('trailname'));
+});
+
 //API to get trail names
 app.get('/api/trailnames', function(req, res) {
   res.send(names);

@@ -16,6 +16,7 @@ getTrailNames(buildSearchOptions);
 
 document.getElementById('search').addEventListener('submit', function() {
   var newTrail = document.getElementById('trailNameInput').value;
+  history.pushState(null, null, "/trail/" + newTrail);
   localStorage.setItem('lastTrail', newTrail);
   loadNewGraph(new Trail(newTrail), buildGraph);
 });
