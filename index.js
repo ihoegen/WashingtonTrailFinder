@@ -75,7 +75,42 @@ app.post('/api/trails', function(req, res) {
     res.sendStatus(400);
   }
 });
-
+// Better api to get trail coords
+app.get('/api/trail/:trailname', function(req, res) {
+  var trailName = req.param("trailname")
+  console.log(trailName);
+  var properties = trailData.features.map(function(x) {
+    return x;
+  });
+  var trails = properties.filter(function(trail) {
+    if (trail.properties.TR_NM && trailName) {
+      return trail.properties.TR_NM.trim().toUpperCase() === trailName.trim().toUpperCase();
+    }
+  });
+  var trailCoords = trails.map(function(e) {
+    return e.geometry.coordinates;
+  });
+  var coords;
+  //This is just how the JSON file is, there's an array of an array...
+  if (trailCoords[0][0]) {
+    coords = trailCoords[0][0].map(function(x) {
+      return {lat: parseFloat((x[1])), lng: parseFloat(x[0])};
+    });
+    var log = trails[0].properties.TR_NM +"---"+ req.headers['x-forwarded-for']+"---"+ new Date() + '\r\n';
+  } else {
+    var log = trailName  +"---"+ req.headers['x-forwarded-for']+"---"+ new Date() + '\r\n';
+  }
+  console.log(log);
+  fs.ensureFileSync("public/logs/logs.log");
+  fs.appendFile("public/logs/logs.log", log, function(err) {
+    if (err) throw err;
+  });
+  if (coords) {
+    res.send(coords);
+  } else {
+    res.sendStatus(400);
+  }
+});
 
 app.post('/api/alltrails',function(req, res) {
   console.log('Loaded. Sending data...');
